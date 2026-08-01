@@ -10,8 +10,14 @@ use Symfony\Component\HttpFoundation\Response;
 $router = new Router();
 
 // Définition d'une route pour la page d'accueil
-$router->get('/', function (Request $request) {
-    return new Response('Hello, World!');
+$router->get('/coucou/:string', function ($name) {
+    return new Response("Hello, $name!");
+});
+
+// Définition d'une route pour la soumission d'un formulaire
+$router->post('/submit', function (Request $request) {
+    $data = $request->request->all();
+    return new Response("Données reçues : " . json_encode($data));
 });
 
 // Définition d'une route pour une page de test
