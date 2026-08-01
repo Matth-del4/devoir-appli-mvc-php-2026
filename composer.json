@@ -1,0 +1,21 @@
+{
+    "name": "matt-a/application-mvc-php",
+    "description": "Application de covoiturage intersites pour les partages de trajets en entreprise",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "MattA\\ApplicationMvcPhp\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "MatthieuAQB",
+            "email": "mattaqb@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "izniburak/router": "^3.1"
+    }
+}
