@@ -1,3 +1,5 @@
+<?php include __DIR__ . '/../layout/header.php'; ?>
+
 <?php foreach ($trajets as $trajet) : ?>
     <div class="trajet">
         <h2><?php echo htmlspecialchars($trajet['id_trajet']); ?></h2>

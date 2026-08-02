@@ -1,6 +1,7 @@
 <?php // Dossier accessible au navigateur
 require '../vendor/autoload.php'; // Chargement de l'autoloader de Composer
 require_once '../config/database.php'; // Chargement de la configuration de la base de données
+session_start();
 
 // Utilisation des classes nécessaires
 use Buki\Router\Router;
