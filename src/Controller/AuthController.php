@@ -27,6 +27,8 @@ class AuthController
         if ($utilisateur && password_verify($password, $utilisateur['mot_de_passe_hash'])) {
             $_SESSION['user_id'] = $utilisateur['id_utilisateur'];
             $_SESSION['role'] = $utilisateur['role'];
+            $_SESSION['prenom'] = $utilisateur['prenom'];
+            $_SESSION['nom'] = $utilisateur['nom'];
             return true;
         } else {
             return false;

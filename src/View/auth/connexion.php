@@ -1,3 +1,5 @@
+<?php include __DIR__ . '/../layout/header.php'; ?>
+
 <form method="POST" action="/connexion">
     <div>
         <label for="email">Email :</label>
