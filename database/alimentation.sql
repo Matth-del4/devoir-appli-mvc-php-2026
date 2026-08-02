@@ -1,0 +1,47 @@
+INSERT INTO Agence (nom_ville) VALUES
+('Paris'),
+('Lyon'),
+('Marseille'),
+('Toulouse'),
+('Nice'),
+('Nantes'),
+('Strasbourg'),
+('Montpellier'),
+('Bordeaux'),
+('Lille'),
+('Rennes'),
+('Reims');
+
+INSERT INTO Utilisateur (nom, prenom, email, telephone, mot_de_passe_hash, role) VALUES
+('Martin', 'Alexandre', 'alexandre.martin@email.fr', '0612345678', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin'),
+('Dubois', 'Sophie', 'sophie.dubois@email.fr', '0698765432', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'employe'),
+('Bernard', 'Julien', 'julien.bernard@email.fr', '0622446688', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'employe'),
+('Moreau', 'Camille', 'camille.moreau@email.fr', '0611223344', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'employe'),
+('Lefèvre', 'Lucie', 'lucie.lefevre@email.fr', '0777889900', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'employe'),
+('Leroy', 'Thomas', 'thomas.leroy@email.fr', '0655443322', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'employe'),
+('Roux', 'Chloé', 'chloe.roux@email.fr', '0633221199', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'employe'),
+('Petit', 'Maxime', 'maxime.petit@email.fr', '0766778899', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'employe'),
+('Garnier', 'Laura', 'laura.garnier@email.fr', '0688776655', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'employe'),
+('Dupuis', 'Antoine', 'antoine.dupuis@email.fr', '0744556677', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'employe'),
+('Lefebvre', 'Emma', 'emma.lefebvre@email.fr', '0699887766', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'employe'),
+('Fontaine', 'Louis', 'louis.fontaine@email.fr', '0655667788', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'employe'),
+('Chevalier', 'Clara', 'clara.chevalier@email.fr', '0788990011', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'employe'),
+('Robin', 'Nicolas', 'nicolas.robin@email.fr', '0644332211', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'employe'),
+('Gauthier', 'Marine', 'marine.gauthier@email.fr', '0677889922', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'employe'),
+('Fournier', 'Pierre', 'pierre.fournier@email.fr', '0722334455', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'employe'),
+('Girard', 'Sarah', 'sarah.girard@email.fr', '0688665544', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'employe'),
+('Lambert', 'Hugo', 'hugo.lambert@email.fr', '0611223366', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'employe'),
+('Masson', 'Julie', 'julie.masson@email.fr', '0733445566', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'employe'),
+('Henry', 'Arthur', 'arthur.henry@email.fr', '0666554433', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'employe');
+
+INSERT INTO Trajet (gdh_depart, gdh_arrivee, nb_place_total, nb_place_dispo, agence_depart_id, agence_arrivee_id, utilisateur_id) VALUES
+('2026-08-05 08:00:00', '2026-08-05 12:00:00', 8, 5, 1, 2, 1),
+('2026-08-06 09:30:00', '2026-08-06 13:30:00', 8, 8, 2, 3, 2),
+('2026-08-07 07:15:00', '2026-08-07 11:15:00', 7, 4, 3, 4, 3),
+('2026-08-08 10:45:00', '2026-08-08 14:45:00', 4, 2, 4, 5, 4),
+('2026-08-09 12:00:00', '2026-08-09 16:00:00', 5, 5, 5, 6, 5),
+('2026-08-10 14:30:00', '2026-08-10 18:30:00', 8, 6, 6, 7, 6),
+('2026-08-11 16:15:00', '2026-08-11 20:15:00', 8, 4, 7, 8, 7),
+('2026-08-12 18:45:00', '2026-08-12 22:45:00', 7, 7, 8, 9, 8),
+('2026-08-13 20:30:00', '2026-08-14 00:30:00', 5, 3, 9, 10, 9),
+('2026-08-14 22:15:00', '2026-08-15 02:15:00', 4, 1, 10, 11,10);
