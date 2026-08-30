@@ -1,0 +1,6 @@
+Utilisateur (id_utilisateur, nom, prenom, email, telephone, mot_de_passe_hash, role)
+
+Agence (id_agence, nom_ville)
+
+Trajet (id_trajet, gdh_depart, gdh_arrivee, nb_place_total, nb_place_dispo, 
+        #agence_depart_id, #agence_arrivee_id, #utilisateur_id)
