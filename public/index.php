@@ -227,5 +227,125 @@ $router->post('/trajet/:id/modifier', function (Request $request, $id) use ($pdo
     exit();
 });
 
+$router->get('/admin', function () use ($pdo) {
+    if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+        header('Location: /connexion');
+        exit();
+    }
+
+    $agenceModel = new \MattA\ApplicationMvcPhp\Model\Agence($pdo);
+    $agences = $agenceModel->getAll();
+
+    $utilisateurModel = new \MattA\ApplicationMvcPhp\Model\Utilisateur($pdo);
+    $utilisateurs = $utilisateurModel->getAll();
+
+    $trajetModel = new \MattA\ApplicationMvcPhp\Model\Trajet($pdo);
+    $trajets = $trajetModel->getAll();
+
+    ob_start();
+    include __DIR__ . '/../src/View/admin/dashboard.php';
+    $content = ob_get_clean();
+
+    ob_start();
+    include __DIR__ . '/../src/View/layout/layout.php';
+    $page = ob_get_clean();
+
+    return new Response($page);
+});
+
+// Créer une agence — affichage formulaire
+$router->get('/admin/agences/creer', function () use ($pdo) {
+    if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+        header('Location: /connexion');
+        exit();
+    }
+
+    ob_start();
+    include __DIR__ . '/../src/View/admin/agence_creer.php';
+    $content = ob_get_clean();
+
+    ob_start();
+    include __DIR__ . '/../src/View/layout/layout.php';
+    $page = ob_get_clean();
+
+    return new Response($page);
+});
+
+// Créer une agence — traitement
+$router->post('/admin/agences/creer', function (Request $request) use ($pdo) {
+    if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+        header('Location: /connexion');
+        exit();
+    }
+
+    $agenceModel = new \MattA\ApplicationMvcPhp\Model\Agence($pdo);
+    $agenceModel->create($request->request->get('nom_ville'));
+
+    header('Location: /admin');
+    exit();
+});
+
+// Modifier une agence — affichage formulaire
+$router->get('/admin/agences/:id/modifier', function ($id) use ($pdo) {
+    if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+        header('Location: /connexion');
+        exit();
+    }
+
+    $agenceModel = new \MattA\ApplicationMvcPhp\Model\Agence($pdo);
+    $agence = $agenceModel->getById((int) $id);
+
+    ob_start();
+    include __DIR__ . '/../src/View/admin/agence_modifier.php';
+    $content = ob_get_clean();
+
+    ob_start();
+    include __DIR__ . '/../src/View/layout/layout.php';
+    $page = ob_get_clean();
+
+    return new Response($page);
+});
+
+// Modifier une agence — traitement
+$router->post('/admin/agences/:id/modifier', function (Request $request, $id) use ($pdo) {
+    if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+        header('Location: /connexion');
+        exit();
+    }
+
+    $agenceModel = new \MattA\ApplicationMvcPhp\Model\Agence($pdo);
+    $agenceModel->update((int) $id, $request->request->get('nom_ville'));
+
+    header('Location: /admin');
+    exit();
+});
+
+// Supprimer une agence
+$router->get('/admin/agences/:id/supprimer', function ($id) use ($pdo) {
+    if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+        header('Location: /connexion');
+        exit();
+    }
+
+    $agenceModel = new \MattA\ApplicationMvcPhp\Model\Agence($pdo);
+    $agenceModel->delete((int) $id);
+
+    header('Location: /admin');
+    exit();
+});
+
+$router->get('/admin/trajets/:id/supprimer', function ($id) use ($pdo) {
+    if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+        header('Location: /connexion');
+        exit();
+    }
+
+    $trajetModel = new \MattA\ApplicationMvcPhp\Model\Trajet($pdo);
+    $trajetModel->delete((int) $id);
+
+    header('Location: /admin');
+    exit();
+});
+
 // Lancement du routeur pour traiter la requête entrante
 $router->run();
