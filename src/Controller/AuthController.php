@@ -34,4 +34,13 @@ class AuthController
             return false;
         }
     }
+
+        /**
+     * Déconnecte l'utilisateur en détruisant la session
+     * @return void
+     */
+    public function deconnexion(): void
+    {
+        session_destroy();
+    }
 }

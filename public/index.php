@@ -347,5 +347,13 @@ $router->get('/admin/trajets/:id/supprimer', function ($id) use ($pdo) {
     exit();
 });
 
+$router->get('/deconnexion', function () use ($pdo) {
+    $controller = new AuthController($pdo);
+    $controller->deconnexion();
+
+    header('Location: /');
+    exit();
+});
+
 // Lancement du routeur pour traiter la requête entrante
 $router->run();
