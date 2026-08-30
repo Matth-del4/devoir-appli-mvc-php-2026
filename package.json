@@ -1,0 +1,19 @@
+{
+  "name": "application-mvc-php",
+  "version": "1.0.0",
+  "description": "Application de covoiturage inter-sites permettant aux employés de proposer et consulter des trajets partagés entre les différents sites de l'entreprise.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "bootstrap": "^5.3.8",
+    "sass": "^1.103.1"
+  }
+}
