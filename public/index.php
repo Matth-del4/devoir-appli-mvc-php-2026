@@ -24,7 +24,11 @@ $router->get('/', function () use ($pdo) {
     include __DIR__ . '/../src/View/trajet/liste.php';
     $content = ob_get_clean();
 
-    return new Response($content);
+    ob_start();
+    include __DIR__ . '/../src/View/layout/layout.php';
+    $page = ob_get_clean();
+
+    return new Response($page);
 });
 
 $router->get('/connexion', function () {
@@ -32,7 +36,11 @@ $router->get('/connexion', function () {
     include __DIR__ . '/../src/View/auth/connexion.php';
     $content = ob_get_clean();
 
-    return new Response($content);
+    ob_start();
+    include __DIR__ . '/../src/View/layout/layout.php';
+    $page = ob_get_clean();
+
+    return new Response($page);
 });
 
 
@@ -52,6 +60,25 @@ $router->post('/connexion', function (Request $request) use ($pdo) {
 $router->post('/submit', function (Request $request) {
     $data = $request->request->all();
     return new Response("Données reçues : " . json_encode($data));
+});
+
+$router->get('/trajet/:id', function ($id) use ($pdo) {
+    $controller = new TrajetController($pdo);
+    $trajet = $controller->details((int) $id);
+
+    if (!$trajet) {
+        return new Response('Trajet introuvable', 404);
+    }
+
+    ob_start();
+    include __DIR__ . '/../src/View/trajet/details.php';
+    $content = ob_get_clean();
+
+    ob_start();
+    include __DIR__ . '/../src/View/layout/layout.php';
+    $page = ob_get_clean();
+
+    return new Response($page);
 });
 
 // Lancement du routeur pour traiter la requête entrante
