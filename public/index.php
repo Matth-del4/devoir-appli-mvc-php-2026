@@ -141,5 +141,91 @@ $router->post('/trajet/creer', function (Request $request) use ($pdo) {
     exit();
 });
 
+$router->get('/trajet/:id/supprimer', function ($id) use ($pdo) {
+    if (!isset($_SESSION['user_id'])) {
+        header('Location: /connexion');
+        exit();
+    }
+
+    $trajetModel = new \MattA\ApplicationMvcPhp\Model\Trajet($pdo);
+    $trajet = $trajetModel->getById((int) $id);
+
+    if (!$trajet || $trajet['id_utilisateur'] != $_SESSION['user_id']) {
+        return new Response('Action non autorisée', 403);
+    }
+
+    $trajetModel->delete((int) $id);
+
+    header('Location: /');
+    exit();
+});
+
+$router->get('/trajet/:id/modifier', function ($id) use ($pdo) {
+    if (!isset($_SESSION['user_id'])) {
+        header('Location: /connexion');
+        exit();
+    }
+
+    $trajetModel = new \MattA\ApplicationMvcPhp\Model\Trajet($pdo);
+    $trajet = $trajetModel->getById((int) $id);
+
+    if (!$trajet || $trajet['id_utilisateur'] != $_SESSION['user_id']) {
+        return new Response('Action non autorisée', 403);
+    }
+
+    $agenceModel = new \MattA\ApplicationMvcPhp\Model\Agence($pdo);
+    $agences = $agenceModel->getAll();
+
+    ob_start();
+    include __DIR__ . '/../src/View/trajet/modifier.php';
+    $content = ob_get_clean();
+
+    ob_start();
+    include __DIR__ . '/../src/View/layout/layout.php';
+    $page = ob_get_clean();
+
+    return new Response($page);
+});
+
+$router->post('/trajet/:id/modifier', function (Request $request, $id) use ($pdo) {
+    if (!isset($_SESSION['user_id'])) {
+        header('Location: /connexion');
+        exit();
+    }
+
+    $trajetModel = new \MattA\ApplicationMvcPhp\Model\Trajet($pdo);
+    $trajetExistant = $trajetModel->getById((int) $id);
+
+    if (!$trajetExistant || $trajetExistant['id_utilisateur'] != $_SESSION['user_id']) {
+        return new Response('Action non autorisée', 403);
+    }
+
+    $agenceDepart = $request->request->get('agence_depart_id');
+    $agenceArrivee = $request->request->get('agence_arrivee_id');
+    $gdhDepart = $request->request->get('gdh_depart');
+    $gdhArrivee = $request->request->get('gdh_arrivee');
+    $nbPlaceTotal = $request->request->get('nb_place_total');
+
+    if ($agenceDepart === $agenceArrivee) {
+        return new Response("Erreur : agences identiques.", 400);
+    }
+    if ($gdhArrivee <= $gdhDepart) {
+        return new Response("Erreur : date incohérente.", 400);
+    }
+
+    $trajetModel->update((int) $id, [
+        'gdh_depart' => $gdhDepart,
+        'gdh_arrivee' => $gdhArrivee,
+        'nb_place_total' => $nbPlaceTotal,
+        'nb_place_dispo' => $nbPlaceTotal,
+        'agence_depart_id' => $agenceDepart,
+        'agence_arrivee_id' => $agenceArrivee,
+        'utilisateur_id' => $_SESSION['user_id'],
+    ]);
+
+    header('Location: /');
+    exit();
+});
+
 // Lancement du routeur pour traiter la requête entrante
 $router->run();

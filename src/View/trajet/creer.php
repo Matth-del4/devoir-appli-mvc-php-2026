@@ -3,7 +3,7 @@
 <div class="container">
     <h1>Proposer un trajet</h1>
 
-    <form method="POST" action="/trajet/creer">
+    <form method="POST" action="/trajet/<?= $trajet['id_trajet'] ?>/modifier">
         <div>
             <label>Nom :</label>
             <input type="text" value="<?= htmlspecialchars($utilisateur['nom']) ?>" disabled>
