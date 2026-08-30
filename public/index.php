@@ -81,5 +81,65 @@ $router->get('/trajet/:id', function ($id) use ($pdo) {
     return new Response($page);
 });
 
+$router->get('/trajet/creer', function () use ($pdo) {
+    if (!isset($_SESSION['user_id'])) {
+        header('Location: /connexion');
+        exit();
+    }
+
+    $utilisateurModel = new \MattA\ApplicationMvcPhp\Model\Utilisateur($pdo);
+    $utilisateur = $utilisateurModel->getById($_SESSION['user_id']);
+
+    $agenceModel = new \MattA\ApplicationMvcPhp\Model\Agence($pdo);
+    $agences = $agenceModel->getAll();
+
+    ob_start();
+    include __DIR__ . '/../src/View/trajet/creer.php';
+    $content = ob_get_clean();
+
+    ob_start();
+    include __DIR__ . '/../src/View/layout/layout.php';
+    $page = ob_get_clean();
+
+    return new Response($page);
+});
+
+$router->post('/trajet/creer', function (Request $request) use ($pdo) {
+    if (!isset($_SESSION['user_id'])) {
+        header('Location: /connexion');
+        exit();
+    }
+
+    $agenceDepart = $request->request->get('agence_depart_id');
+    $agenceArrivee = $request->request->get('agence_arrivee_id');
+    $gdhDepart = $request->request->get('gdh_depart');
+    $gdhArrivee = $request->request->get('gdh_arrivee');
+    $nbPlaceTotal = $request->request->get('nb_place_total');
+
+    // Contrôle 1 : agences différentes
+    if ($agenceDepart === $agenceArrivee) {
+        return new Response("Erreur : l'agence de départ et d'arrivée doivent être différentes.", 400);
+    }
+
+    // Contrôle 2 : arrivée après départ
+    if ($gdhArrivee <= $gdhDepart) {
+        return new Response("Erreur : la date d'arrivée doit être après la date de départ.", 400);
+    }
+
+    $trajetModel = new \MattA\ApplicationMvcPhp\Model\Trajet($pdo);
+    $trajetModel->create([
+        'gdh_depart' => $gdhDepart,
+        'gdh_arrivee' => $gdhArrivee,
+        'nb_place_total' => $nbPlaceTotal,
+        'nb_place_dispo' => $nbPlaceTotal,
+        'agence_depart_id' => $agenceDepart,
+        'agence_arrivee_id' => $agenceArrivee,
+        'utilisateur_id' => $_SESSION['user_id'],
+    ]);
+
+    header('Location: /');
+    exit();
+});
+
 // Lancement du routeur pour traiter la requête entrante
 $router->run();
