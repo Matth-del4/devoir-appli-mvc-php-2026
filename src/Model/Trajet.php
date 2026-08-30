@@ -32,7 +32,22 @@ class Trajet
      */
     public function getById(int $id): ?array 
     {
-        $statement = $this->pdo->prepare('SELECT * FROM Trajet WHERE id_trajet = :id_trajet'); 
+        $statement = $this->pdo->prepare('SELECT 
+    Trajet.id_trajet,
+    Trajet.gdh_depart,
+    Trajet.gdh_arrivee,
+    Trajet.nb_place_total,
+    Trajet.nb_place_dispo,
+    Trajet.agence_depart_id,
+    Trajet.agence_arrivee_id,
+    Utilisateur.id_utilisateur,
+    Utilisateur.nom,
+    Utilisateur.prenom,
+    Utilisateur.email,
+    Utilisateur.telephone
+FROM Trajet
+JOIN Utilisateur ON Trajet.utilisateur_id = Utilisateur.id_utilisateur
+WHERE Trajet.id_trajet = :id_trajet'); 
         $statement->execute(['id_trajet' => $id]); 
         $result = $statement->fetch(\PDO::FETCH_ASSOC); 
         return $result ?: null;

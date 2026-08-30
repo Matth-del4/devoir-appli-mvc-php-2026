@@ -19,4 +19,10 @@ class TrajetController
 
         return $trajetModel->getAvailableTrajets();
     }
+
+    public function details(int $id): ?array
+    {
+        $trajetModel = new Trajet($this->pdo);
+        return $trajetModel->getById($id);
+    }
 }
