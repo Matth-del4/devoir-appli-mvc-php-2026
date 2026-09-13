@@ -1,4 +1,10 @@
 <?php // Dossier accessible au navigateur
+if (php_sapi_name() === 'cli-server') {
+    $path = __DIR__ . parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    if ($path !== __DIR__ . '/' && is_file($path)) {
+        return false;
+    }
+}
 require '../vendor/autoload.php'; // Chargement de l'autoloader de Composer
 require_once '../config/database.php'; // Chargement de la configuration de la base de données
 session_start();
