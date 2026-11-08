@@ -21,6 +21,7 @@ class AuthController
         $email = $request->request->get('email');
         $password = $request->request->get('password');
 
+        /**Elle crée un objet à partir de la classe Utilisateur */
         $utilisateurModel = new Utilisateur($this->pdo);
         $utilisateur = $utilisateurModel->getByEmail($email);
         
