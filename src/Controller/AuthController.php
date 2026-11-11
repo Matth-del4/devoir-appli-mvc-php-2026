@@ -14,6 +14,11 @@ class AuthController
         $this->pdo = $pdo;
     }
 
+    /**
+     * Connecte l'utilisateur
+     * @param Request $request
+     * @return bool
+     */
     public function connexion(Request $request)
     {
         session_start();
